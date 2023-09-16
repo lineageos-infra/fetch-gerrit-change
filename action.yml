@@ -22,13 +22,13 @@ runs:
     - uses: actions/checkout@v4
       with:
         repository: ${{ inputs.repository }}
-        token: ${{ input.token }}
-        ref: ${{ input.ref }}
+        token: ${{ inputs.token }}
+        ref: ${{ inputs.ref }}
     - id: gerrit-checkout
       shell: bash
       timeout-minutes: 5
       run: |
-        until git ls-remote | grep ${{ input.gerrit-ref }}; do
+        until git ls-remote | grep ${{ inputs.gerrit-ref }}; do
           sleep 10
         done
         git fetch origin ${{ inputs.gerrit-ref }}
