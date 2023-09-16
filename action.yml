@@ -26,7 +26,6 @@ runs:
         ref: ${{ inputs.ref }}
     - id: gerrit-checkout
       shell: bash
-      timeout-minutes: 5
       run: |
         until git ls-remote | grep ${{ inputs.gerrit-ref }}; do
           sleep 10
