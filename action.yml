@@ -31,4 +31,5 @@ runs:
           sleep 10
         done
         git fetch origin ${{ inputs.gerrit-ref }}
+        git checkout FETCH_HEAD
 
