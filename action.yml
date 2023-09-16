@@ -1,0 +1,35 @@
+name: "Wait for ref to be available"
+description: "If using github as a mirror, this action will pause until the requested reference is available"
+inputs:
+  repository:
+    description: 'Repository name with owner. For example, actions/checkout'
+    default: ${{ github.repository }}
+  gerrit-ref:
+    description: >
+      Reference in the form of refs/changes/0000/00
+  ref:
+    description: >
+      The branch, tag or SHA to checkout. When checking out the repository that
+      triggered a workflow, this defaults to the reference or SHA for that
+      event. Otherwise, uses the default branch.
+    required: false
+    default: ${{ github.sha }}
+  token:
+    default: ${{ github.token }}
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: ${{ inputs.repository }}
+        token: ${{ input.token }}
+        ref: ${{ input.ref }}
+    - id: gerrit-checkout
+      shell: bash
+      timeout-minutes: 5
+      run: |
+        until git ls-remote | grep ${{ input.gerrit-ref }}; do
+          sleep 10
+        done
+        git fetch origin ${{ inputs.gerrit-ref }}
+
