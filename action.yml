@@ -27,9 +27,8 @@ runs:
     - id: gerrit-checkout
       shell: bash
       run: |
-        until git ls-remote | grep ${{ inputs.gerrit-ref }}; do
+        until git fetch origin ${{ inputs.gerrit-ref }}; do
           sleep 10
         done
-        git fetch origin ${{ inputs.gerrit-ref }}
         git checkout FETCH_HEAD
 
