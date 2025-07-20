@@ -28,6 +28,7 @@ runs:
         fetch-depth: ${{ inputs.fetch-depth }}
         token: ${{ inputs.token }}
         ref: ${{ inputs.ref }}
+        submodules: true
     - id: gerrit-checkout
       shell: bash
       run: |
